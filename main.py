@@ -12,6 +12,7 @@ root.grid_columnconfigure(1, minsize=200)
 root.grid_rowconfigure(0, minsize=50)
 
 # ip device
+
 my_ip = requests.get('https://ramziv.com/ip').text
 
 lbl_ip = tk.Label(root, text="ip device", bg="grey")
@@ -21,24 +22,29 @@ lbl_ip.grid(row=0, column=0, stick="nsew")
 lbl_show_ip.grid(row=0, column=1, stick="nsew")
 
 # proxy
+proxy_on = os.system("bat\proxy_on.bat")
 
 
-btn1_proxy = tk.Button(root, text='proxy.pac')
+
+def insert():
+    lbl_proxy_on.insert(0, "прописан proxy.pac")
+
+
+btn1_proxy = tk.Button(root, text='proxy.pac', command=insert)
 btn2_proxy = tk.Button(root, text='proxy_001.pac')
 btn3_proxy = tk.Button(root, text='delete_proxy')
+lbl_proxy_on = tk.Entry(root, text="btn_proxy_on")
 
 btn1_proxy.grid(row=2, column=0, stick="we")
 btn2_proxy.grid(row=3, column=0, stick="we")
 btn3_proxy.grid(row=4, column=0, stick="we")
+lbl_proxy_on.grid(row=2, column=1)
+# acu_proxy ="http://proxy/proxy.pac"
 
-
-#acu_proxy ="http://proxy/proxy.pac"
-
-#def acu():
+# def acu():
 #    os.system('reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings" | findstr "AutoConfigURL"')
 
-#AutoConfigURL    REG_SZ    http://proxy/proxy.pac
-
+# AutoConfigURL    REG_SZ    http://proxy/proxy.pac
 
 
 root.mainloop()

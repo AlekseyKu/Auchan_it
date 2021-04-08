@@ -1,44 +1,64 @@
 import tkinter as tk
+import tkinter.ttk as ttk
 import requests
 import os
 
+from IPython.core.magics.config import reg
+
 root = tk.Tk()
 root.title('Auchan MG')
-root.geometry(f"400x600+100+200")
+root.geometry(f"400x155")
+root['bg'] = 'grey'
+
+note = ttk.Notebook(root)
+
+ms = ttk.Frame(note)
+note.add(ms, text="Proxy")
+mn = ttk.Frame(note)
+note.add(mn, text="Info")
+note.grid()
 
 # grid configure
-root.grid_columnconfigure(0, minsize=200)
-root.grid_columnconfigure(1, minsize=200)
-root.grid_rowconfigure(0, minsize=50)
+ms.grid_columnconfigure(0, minsize=200)
+ms.grid_columnconfigure(1, minsize=200)
+ms.grid_rowconfigure(0, minsize=50)
 
 # ip device
 
 my_ip = requests.get('https://ramziv.com/ip').text
 
-lbl_ip = tk.Label(root, text="ip device", bg="grey")
-lbl_show_ip = tk.Label(root, text=my_ip, bg="grey")
+lbl_ip = tk.Label(ms, text="ip device", bg="grey")
+lbl_show_ip = tk.Label(ms, text=my_ip, bg="grey")
 
-lbl_ip.grid(row=0, column=0, stick="nsew")
-lbl_show_ip.grid(row=0, column=1, stick="nsew")
+lbl_ip.grid(row=0, column=0, stick="nsew", pady=5)
+lbl_show_ip.grid(row=0, column=1, stick="nsew", pady=5)
+
 
 # proxy
-proxy_on = os.system("bat\proxy_on.bat")
+# proxy_on = os.system("bat\proxy_on.bat")
+# proxy_001_on = os.system("bat\proxy_001_on.bat")
+# proxy_delete = os.system("bat\proxy_delete.bat")
 
 
 
-def insert():
-    lbl_proxy_on.insert(0, "прописан proxy.pac")
+def click_btn_proxy(text):
+    lbl_proxy_show.config(text="{}".format(text))
 
 
-btn1_proxy = tk.Button(root, text='proxy.pac', command=insert)
-btn2_proxy = tk.Button(root, text='proxy_001.pac')
-btn3_proxy = tk.Button(root, text='delete_proxy')
-lbl_proxy_on = tk.Entry(root, text="btn_proxy_on")
+# "Прописан proxy.pac"
+btn1_proxy = tk.Button(ms, text='proxy.pac', command=lambda: click_btn_proxy(os.system("bat\proxy_on.bat")))
+# "Прописан proxy_001.pac"
+btn2_proxy = tk.Button(ms, text='proxy_001.pac', command=lambda: click_btn_proxy(os.system("bat\proxy_001_on.bat")))
+# "AutoConfigURL удален"
+btn3_proxy = tk.Button(ms, text='delete_proxy', command=lambda: click_btn_proxy(os.system("bat\proxy_delete.bat")))
+
+lbl_proxy_show = tk.Label(ms)
 
 btn1_proxy.grid(row=2, column=0, stick="we")
 btn2_proxy.grid(row=3, column=0, stick="we")
 btn3_proxy.grid(row=4, column=0, stick="we")
-lbl_proxy_on.grid(row=2, column=1)
+lbl_proxy_show.grid(row=3, column=1, stick="we")
+
 # acu_proxy ="http://proxy/proxy.pac"
 
 # def acu():
